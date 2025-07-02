@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 public static class Arrays
 {
     /// <summary>
@@ -8,12 +10,18 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // Create an array to store all the multiples, and a double to store the current number
+        double[] multiples = new double[length];
+        double currentNum = 0;
+        // Run a loop to add the number, until a number of times just less than the length
+        for (int i = 0; i < length; i++)
+        {
+            currentNum += number;
+            multiples[i] = currentNum;
+        }
+
+        return multiples; // return the multiples array which has stored all the numbers
     }
 
     /// <summary>
@@ -29,5 +37,24 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Store the halves of the list seperately based on the 'amount'
+        // Store current index
+        // loop through the lists to replace values in the original list
+
+        List<int> firstHalf = data.GetRange(0, (data.Count) - amount);
+        List<int> secondHalf = data.GetRange((data.Count) - amount, amount);
+        int currentIndex = 0;
+
+        for (int i = 0; i < secondHalf.Count; i++)
+        {
+            data[currentIndex] = secondHalf[i];
+            currentIndex++;
+        }
+        for (int j = 0; j < firstHalf.Count; j++)
+        {
+            data[currentIndex] = firstHalf[j];
+            currentIndex++;
+        }
     }
 }
