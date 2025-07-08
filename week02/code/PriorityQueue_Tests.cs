@@ -64,7 +64,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Empty Queue
     // Expected Result: error
-    // Defect(s) Found: 
+    // Defect(s) Found: none
     public void TestPriorityQueue_3()
     {
         var priorityQueue = new PriorityQueue();
