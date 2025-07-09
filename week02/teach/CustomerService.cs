@@ -3,7 +3,8 @@
 /// added and allows customers to be serviced.
 /// </summary>
 public class CustomerService {
-    public static void Run() {
+    public static void Run()
+    {
         // Example code to see what's in the customer service queue:
         // var cs = new CustomerService(10);
         // Console.WriteLine(cs);
@@ -11,24 +12,59 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: create queue with a less than one size
+        // Expected Result: default to 10
         Console.WriteLine("Test 1");
+        var cs = new CustomerService(-1);
+        for (int i = 1; i < 15; i++)
+        {
+            cs.AddNewCustomer();
+            Console.WriteLine("Added customer ", i);
+        }
 
-        // Defect(s) Found: 
+        // Defect(s) Found: defaults to max +1
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: add customers past the queue limit
+        // Expected Result: eror message shows
         Console.WriteLine("Test 2");
+        cs = new CustomerService(1);
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
+        cs.AddNewCustomer();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: kept adding to the line past the limit
 
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: dequeue customer
+        // Expected Result: display results
+        Console.WriteLine("Test 3");
+        cs = new CustomerService(1);
+        cs.AddNewCustomer();
+        cs.ServeCustomer();
+
+
+        // Defect(s) Found: removed customer too early
+
+        Console.WriteLine("=================");
+        
+        // Test 4
+        // Scenario: dequeue customer when line empty
+        // Expected Result: error message shows
+        Console.WriteLine("Test 4");
+        cs = new CustomerService(1);
+        cs.AddNewCustomer();
+        cs.ServeCustomer();
+        cs.ServeCustomer();
+
+
+        // Defect(s) Found: uncaught error
+
+        Console.WriteLine("=================");
     }
 
     private readonly List<Customer> _queue = new();
@@ -67,7 +103,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,8 +124,13 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+        if (_queue.Count() == 0)
+        {
+            Console.WriteLine("Queue Empty.");
+            return;
+        }
         var customer = _queue[0];
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
     }
 
