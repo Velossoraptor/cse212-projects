@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 
 public static class SetsAndMaps
@@ -21,8 +22,28 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        // TODO Problem 1 - FINISHED
+        // Thoughts: Store current words letters in a set, pop matching words/letters from og list and add to results unless the letters are the same
+        var unique = new HashSet<string>();
+        var reverse = "";
+        var results = new List<String>();
+        foreach (string word in words)
+        {
+            reverse = $"{word[1]}{word[0]}"; // For symmetry
+            if (unique.Contains(reverse))
+            {
+                results.Add($"{word} & {reverse}");
+                unique.Remove(reverse);
+            }
+            else if (reverse == word) // For efficiency
+            {
+            }
+            else // For the first occurrence of a word
+            {
+                unique.Add(word);
+            }
+        }
+        return results.ToArray();
     }
 
     /// <summary>
@@ -42,7 +63,17 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+            // TODO Problem 2 - FINISHED
+            // Thoughts: Store degrees as keys, add if dictionary does not contain. Get value, add one for each time the degree appears again
+            var degree = fields[3];
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree] += 1;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -66,8 +97,39 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // TODO Problem 3 - ADD YOUR CODE HERE EFFICIENCY PROBLEM
+        // Thoughts: count each time a letter appears in each word and compare the two
+        var w1 = word1.ToLower().Replace(" ", "");
+        var w2 = word2.ToLower().Replace(" ", "");
+        // Console.WriteLine(w1 + " " + w2);
+        if (w1.Length != w2.Length)
+        {
+            return false;
+        }
+        
+        var wordCount = new Dictionary<char, int>();
+
+        foreach (var letter in w1)
+        {
+            if (!wordCount.ContainsKey(letter))
+            {
+                wordCount[letter] = 0;
+            }
+            wordCount[letter]++;
+        }
+        foreach (var letter in w2)
+        {
+            if (!wordCount.ContainsKey(letter))
+            {
+                return false;
+            }
+            wordCount[letter]--;
+            if (wordCount[letter] < 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>

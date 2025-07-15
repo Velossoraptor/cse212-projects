@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+
 /// <summary>
 /// Defines a maze using a dictionary. The dictionary is provided by the
 /// user when the Maze object is created. The dictionary will contain the
@@ -20,6 +22,8 @@ public class Maze
     private int _currX = 1;
     private int _currY = 1;
 
+    private ValueTuple<int, int> location;
+
     public Maze(Dictionary<ValueTuple<int, int>, bool[]> mazeMap)
     {
         _mazeMap = mazeMap;
@@ -33,6 +37,16 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        location = (_currX, _currY);
+        if (_mazeMap[location][0] == true)
+        {
+            Console.WriteLine("Moving Left");
+            _currX--;
+        }
+        else if (_mazeMap[location][0] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -42,6 +56,16 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+        location = (_currX, _currY);
+        if (_mazeMap[location][1] == true)
+        {
+            Console.WriteLine("Moving Right");
+            _currX++;
+        }
+        else if (_mazeMap[location][1] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -51,6 +75,16 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+        location = (_currX, _currY);
+        if (_mazeMap[location][2] == true)
+        {
+            Console.WriteLine("Moving Up");
+            _currY--;
+        }
+        else if (_mazeMap[location][2] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -60,6 +94,16 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+        location = (_currX, _currY);
+        if (_mazeMap[location][3] == true)
+        {
+            Console.WriteLine("Moving Down");
+            _currY++;
+        }
+        else if (_mazeMap[location][3] == false)
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     public string GetStatus()
