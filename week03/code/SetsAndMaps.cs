@@ -97,7 +97,7 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE EFFICIENCY PROBLEM
+        // TODO Problem 3 - FINISHED
         // Thoughts: count each time a letter appears in each word and compare the two
         var w1 = word1.ToLower().Replace(" ", "");
         var w2 = word2.ToLower().Replace(" ", "");
@@ -163,6 +163,12 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+        var earthquakes = new String[featureCollection.features.Length];
+        for (int i = 0; i < featureCollection.features.Length; i++)
+        {
+            earthquakes[i] = ($"{featureCollection.features[i].properties.place} - Mag {featureCollection.features[i].properties.mag}");
+        }
+        
+        return earthquakes;
     }
 }
