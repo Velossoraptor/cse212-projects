@@ -183,6 +183,82 @@ public static class Recursion
     /// Use recursion to insert all paths that start at (0,0) and end at the
     /// 'end' square into the results list.
     /// </summary>
+    //     public static void SolveMaze(List<string> results, Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null)
+    //     {
+    //         // If this is the first time running the function, then we need
+    //         // to initialize the currPath list.
+    //         if (currPath == null)
+    //         {
+    //             currPath = new List<ValueTuple<int, int>>();
+    //         }
+    //         if (results == null)
+    //         {
+    //             results = new List<string>();
+    //         }
+    //         if (maze.IsEnd(x, y))
+    //         {
+    //             currPath.Add((x, y));
+    //             Console.WriteLine($"{x}, {y}");
+    //             Console.WriteLine(currPath.AsString());
+    //             results.Add(currPath.AsString());
+
+    //             return;
+    //         }
+
+    //         // currPath.Add((1,2)); // Use this syntax to add to the current path
+
+    //         // TODO Start Problem 5 - INCOMPLETE
+    //         // ADD CODE HERE
+    //         currPath.Add((x, y));
+    //         Console.WriteLine($"{x}, {y}");
+    //         Console.WriteLine(currPath.AsString());
+    //         if (maze.IsValidMove(currPath, x + 1, y)) // Right 
+    //         {
+    //             ///
+    //             var newCP = currPath;
+    //             var newX = x;
+    //             var newY = y;
+    //             SolveMaze(results, maze, x + 1, y, currPath);
+    //             currPath = newCP; ///
+    //             x = newX;
+    //             y = newY;
+    //         }
+    //         if (maze.IsValidMove(currPath, x, y + 1)) // Down
+    //         {
+    //             SolveMaze(results, maze, x, y + 1, currPath);
+    //             currPath = new List<ValueTuple<int, int>> { (0, 0) };
+    //             x = 0;
+    //             y = 0;
+    //         }
+    //         if (maze.IsValidMove(currPath, x - 1, y)) // Left
+    //         {
+    //             SolveMaze(results, maze, x - 1, y, currPath);
+    //             currPath = new List<ValueTuple<int, int>> { (0, 0) };
+    //             x = 0;
+    //             y = 0;
+    //         }
+    //         if (maze.IsValidMove(currPath, x, y - 1)) // Up
+    //         {
+    //             SolveMaze(results, maze, x, y - 1, currPath);
+    //             currPath = new List<ValueTuple<int, int>> { (0, 0) };
+    //             x = 0;
+    //             y = 0;
+    //         }
+    //         else
+    //         {
+    //             currPath.RemoveAt(currPath.Count - 1);
+    //             return;
+    //         }
+    //         // Console.WriteLine(currPath.AsString());
+    //         // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+    //     }
+    // }
+
+
+    /// <summary>
+    /// Use recursion to insert all paths that start at (0,0) and end at the
+    /// 'end' square into the results list.
+    /// </summary>
     public static void SolveMaze(List<string> results, Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null)
     {
         // If this is the first time running the function, then we need
@@ -191,64 +267,39 @@ public static class Recursion
         {
             currPath = new List<ValueTuple<int, int>>();
         }
-        if (results == null)
+        if (results == null) // initialize results if null
         {
             results = new List<string>();
         }
-        if (maze.IsEnd(x, y))
+        if (maze.IsEnd(x, y)) // Check for end case, add to results and return if so
         {
             currPath.Add((x, y));
-            Console.WriteLine($"{x}, {y}");
-            Console.WriteLine(currPath.AsString());
             results.Add(currPath.AsString());
-            
             return;
         }
 
         // currPath.Add((1,2)); // Use this syntax to add to the current path
 
-        // TODO Start Problem 5 - INCOMPLETE
-        // ADD CODE HERE
-        currPath.Add((x, y));
-        Console.WriteLine($"{x}, {y}");
-        Console.WriteLine(currPath.AsString());
+        // TODO Start Problem 5 - COMPLETE
+        
+        currPath.Add((x, y)); // Add current space
+
         if (maze.IsValidMove(currPath, x + 1, y)) // Right 
         {
-            ///
-            var newCP = currPath;
-            var newX = x;
-            var newY = y;
-            SolveMaze(results, maze, x + 1, y, currPath);
-            currPath = newCP; ///
-            x = newX;
-            y = newY;
-        }
-        if (maze.IsValidMove(currPath, x, y + 1)) // Down
-        {
-            SolveMaze(results, maze, x, y + 1, currPath);
-            currPath = new List<ValueTuple<int, int>> { (0, 0) };
-            x = 0;
-            y = 0;
+            SolveMaze(results, maze, x + 1, y, new List<ValueTuple<int, int>>(currPath));
         }
         if (maze.IsValidMove(currPath, x - 1, y)) // Left
         {
-            SolveMaze(results, maze, x - 1, y, currPath);
-            currPath = new List<ValueTuple<int, int>> { (0, 0) };
-            x = 0;
-            y = 0;
+            SolveMaze(results, maze, x - 1, y, new List<ValueTuple<int, int>>(currPath));
+        }
+        if (maze.IsValidMove(currPath, x, y + 1)) // Down
+        {
+            SolveMaze(results, maze, x, y + 1, new List<ValueTuple<int, int>>(currPath));
         }
         if (maze.IsValidMove(currPath, x, y - 1)) // Up
         {
-            SolveMaze(results, maze, x, y - 1, currPath);
-            currPath = new List<ValueTuple<int, int>> { (0, 0) };
-            x = 0;
-            y = 0;
+            SolveMaze(results, maze, x, y - 1, new List<ValueTuple<int, int>>(currPath));
         }
-        else
-        {
-            return;
-        }
-        // Console.WriteLine(currPath.AsString());
         // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
     }
 }
