@@ -78,9 +78,15 @@ public class BinarySearchTree : IEnumerable<int>
         }
     }
 
-    private void TraverseBackward(Node? node, List<int> values)
+    private void TraverseBackward(Node? node, List<int> values) // Basically the opposite of the forward traverse
     {
-        // TODO Problem 3
+        // Problem 3 - Complete
+        if (node is not null)
+        {
+            TraverseBackward(node.Right, values); // Traverse the right path
+            values.Add(node.Data); // Add current node
+            TraverseBackward(node.Left, values); // Then traverse left path
+        }
     }
 
     /// <summary>
@@ -90,7 +96,7 @@ public class BinarySearchTree : IEnumerable<int>
     {
         if (_root is null)
             return 0;
-        return _root.GetHeight();
+        return _root.GetHeight(1);
     }
 
     public override string ToString()
